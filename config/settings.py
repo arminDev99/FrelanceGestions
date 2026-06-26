@@ -24,6 +24,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-mvp-key-change-this-in-pro
 DEBUG = os.getenv('DEBUG', '0') == '1'
 
 ALLOWED_HOSTS = ['*']
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 INSTALLED_APPS = [
@@ -124,9 +126,28 @@ def build_database_config():
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 
+
+def build_csrf_trusted_origins():
+    origins = [
+        origin.strip()
+        for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
+        if origin.strip()
+    ]
+
+    railway_domain = os.getenv('RAILWAY_PUBLIC_DOMAIN')
+    if railway_domain:
+        railway_domain = railway_domain.strip()
+        if not railway_domain.startswith('http://') and not railway_domain.startswith('https://'):
+            railway_domain = f'https://{railway_domain}'
+        origins.append(railway_domain)
+
+    return origins
+
 DATABASES = {
     'default': build_database_config(),
 }
+
+CSRF_TRUSTED_ORIGINS = build_csrf_trusted_origins()
 
 
 # Password validation

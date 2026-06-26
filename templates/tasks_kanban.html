@@ -86,7 +86,7 @@
                 fetch(`/tareas/${taskId}/estado/`, {
                     method: 'POST',
                     headers: {
-                        'X-CSRFToken': '{{ csrf_token }}',
+                        'X-CSRFToken': getCookie('csrftoken'),
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     body: `status=${newStatus}`
