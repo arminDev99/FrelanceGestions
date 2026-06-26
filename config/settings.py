@@ -94,6 +94,27 @@ def build_database_config():
 
         return config
 
+    pg_host = os.getenv('PGHOST')
+    pg_database = os.getenv('PGDATABASE')
+    pg_user = os.getenv('PGUSER')
+    pg_password = os.getenv('PGPASSWORD')
+
+    if pg_host and pg_database and pg_user and pg_password:
+        config = {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': pg_database or os.getenv('DB_NAME', 'freelance_db'),
+            'USER': pg_user or os.getenv('DB_USER', 'admin'),
+            'PASSWORD': pg_password or os.getenv('DB_PASSWORD', 'adminpass'),
+            'HOST': pg_host or os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('PGPORT', os.getenv('DB_PORT', '5432')),
+        }
+
+        sslmode = os.getenv('PGSSLMODE')
+        if sslmode:
+            config['OPTIONS'] = {'sslmode': sslmode}
+
+        return config
+
     return {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DB_NAME', 'freelance_db'),
