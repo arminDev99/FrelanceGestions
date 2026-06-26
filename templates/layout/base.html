@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50 text-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RootDev | MVP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-active { background-color: rgba(255, 255, 255, 0.1); border-left: 4px solid #818cf8; color: #fff; }
+    </style>
+</head>
+<body class="h-full bg-slate-50">
+    <div class="flex h-full">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-slate-950 text-slate-400 hidden md:flex flex-col shadow-2xl">
+            <div class="p-8">
+                <span class="text-2xl font-bold tracking-tighter text-white">Root<span class="text-indigo-500">Dev</span></span>
+            </div>
+            <nav class="flex-1 px-4 space-y-2 mt-4">
+                <a href="/" class="flex items-center px-4 py-3 rounded-xl hover:bg-white/5 hover:text-white transition {% if request.path == '/' %}sidebar-active{% endif %}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Dashboard
+                </a>
+                <a href="/clientes/" class="flex items-center px-4 py-3 rounded-xl hover:bg-white/5 hover:text-white transition {% if '/clientes/' in request.path %}sidebar-active{% endif %}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    Clientes
+                </a>
+                <a href="/proyectos/" class="flex items-center px-4 py-3 rounded-xl hover:bg-white/5 hover:text-white transition {% if '/proyectos/' in request.path %}sidebar-active{% endif %}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    Proyectos
+                </a>
+                <a href="/tareas/" class="flex items-center px-4 py-3 rounded-xl hover:bg-white/5 hover:text-white transition {% if '/tareas/' in request.path %}sidebar-active{% endif %}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    Tareas (Kanban)
+                </a>
+            </nav>
+
+            <div class="p-6 border-t border-white/5">
+                <div class="flex items-center p-3 rounded-2xl bg-white/5">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-sm font-bold text-white uppercase">
+                        {{ user.username|slice:":1" }}
+                    </div>
+                    <div class="ml-3 overflow-hidden">
+                        <p class="text-xs font-bold text-white truncate">{{ user.username }}</p>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="text-[10px] text-slate-500 hover:text-indigo-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Cerrar Sesión</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 md:hidden shadow-sm">
+                <span class="text-xl font-bold text-slate-950">Root<span class="text-indigo-600">Dev</span></span>
+                <button class="p-2 text-slate-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </header>
+            
+            <main class="flex-1 overflow-x-hidden overflow-y-auto p-8">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts at the end of body -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script>
+        document.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        });
+    </script>
+</body>
+</html>

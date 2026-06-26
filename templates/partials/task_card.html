@@ -1,0 +1,26 @@
+<div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 group hover:border-indigo-300 transition-all cursor-grab active:cursor-grabbing" id="task-{{ task.id }}">
+    <div class="flex justify-between items-start mb-2">
+        <span class="text-xs font-bold uppercase tracking-wider 
+            {% if task.priority == 'high' %}text-red-600 bg-red-50{% elif task.priority == 'medium' %}text-amber-600 bg-amber-50{% else %}text-emerald-600 bg-emerald-50{% endif %} 
+            px-2 py-0.5 rounded">
+            {{ task.get_priority_display }}
+        </span>
+        <button hx-delete="{% url 'task_delete' task.id %}" hx-target="#task-{{ task.id }}" hx-swap="outerHTML" hx-confirm="¿Eliminar esta tarea?"
+                class="text-gray-300 hover:text-red-500 transition opacity-0 group-hover:opacity-100">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+        </button>
+    </div>
+    
+    <h3 class="font-semibold text-gray-800 mb-1">{{ task.name }}</h3>
+    <p class="text-xs text-gray-400 mb-3 flex items-center">
+        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002-2z"></path></svg>
+        {{ task.project.name }}
+    </p>
+
+    <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-50">
+        <div class="flex items-center text-[10px] text-gray-400">
+            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002-2z"></path></svg>
+            {% if task.due_date %}{{ task.due_date }}{% else %}Sin fecha{% endif %}
+        </div>
+    </div>
+</div>

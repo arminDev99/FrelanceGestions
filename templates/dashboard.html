@@ -1,0 +1,71 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<div id="main-dashboard">
+    <div class="mb-10">
+        <h1 class="text-4xl font-black text-slate-900 tracking-tight">Dashboard</h1>
+        <p class="text-slate-500 mt-2 font-medium">Bienvenido de nuevo, <span class="text-indigo-600 font-bold">{{ user.username }}</span>.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+        <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-200 relative overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div class="absolute -top-4 -right-4 w-24 h-24 bg-indigo-50 rounded-full transition-transform group-hover:scale-150 duration-500"></div>
+            <div class="relative">
+                <h3 class="text-slate-400 text-xs font-black uppercase tracking-widest">Clientes Activos</h3>
+                <p class="text-5xl font-black text-slate-900 mt-4">{{ clients_count }}</p>
+                <div class="mt-6 flex items-center text-indigo-600 text-sm font-bold">
+                    <span>Gestionar CRM</span>
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-200 relative overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div class="absolute -top-4 -right-4 w-24 h-24 bg-emerald-50 rounded-full transition-transform group-hover:scale-150 duration-500"></div>
+            <div class="relative">
+                <h3 class="text-slate-400 text-xs font-black uppercase tracking-widest">Proyectos en Curso</h3>
+                <p class="text-5xl font-black text-slate-900 mt-4">{{ active_projects }}</p>
+                <div class="mt-6 flex items-center text-emerald-600 text-sm font-bold">
+                    <span>Ver Proyectos</span>
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-200 p-12">
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-4">
+            <div>
+                <h2 class="text-2xl font-black text-slate-900">Acciones Directas</h2>
+                <p class="text-sm text-slate-500 font-medium">Controla tu negocio desde un solo lugar.</p>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="flex h-2 w-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                <span class="text-xs text-slate-400 font-black uppercase tracking-widest">Sincronizado</span>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <a href="/clientes/" class="flex items-center p-6 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow-xl hover:border-indigo-100 transition-all group">
+                <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center mr-5 shadow-lg shadow-indigo-200 group-hover:rotate-6 transition-transform">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+                </div>
+                <div>
+                    <span class="block font-black text-slate-900 group-hover:text-indigo-600 transition-colors">Clientes</span>
+                    <span class="text-xs text-slate-500 font-medium">Crear nuevo registro</span>
+                </div>
+            </a>
+
+            <a href="/proyectos/" class="flex items-center p-6 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow-xl hover:border-emerald-100 transition-all group">
+                <div class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center mr-5 shadow-lg shadow-emerald-200 group-hover:-rotate-6 transition-transform">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg>
+                </div>
+                <div>
+                    <span class="block font-black text-slate-900 group-hover:text-emerald-600 transition-colors">Proyectos</span>
+                    <span class="text-xs text-slate-500 font-medium">Iniciar nueva etapa</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
